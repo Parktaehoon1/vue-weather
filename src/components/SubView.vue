@@ -1,0 +1,253 @@
+<template>
+    <div class="rightContainer">
+        <div id="cityNameBox">
+            <div class="cityName">
+                <p>San Fransisco</p>
+                <p>Jan 28</p>
+            </div>
+        </div>
+        <div id="contentsBox">
+            <div class="buttonBox">
+                <div class="buttonBackground">
+                    <button class="forecast">forecast</button>
+                    <button class="airquality">airquality</button>
+                </div>
+            </div>
+
+            <div class="weatherBox">
+                <div class="airCondition">
+                    <p>매우 추움</p>
+                </div>
+                <div class="detail">
+                    <div class="title">
+                        <p>Detail Temperatures</p>
+                    </div>
+                    <div class="data">
+                        <div class="dataName">
+                            <p></p>
+                            <p></p>
+                        </div>
+                        <div class="dataValue">
+                            <p>
+                                <span></span> &deg;
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <MapView />
+        <nav>
+            <i class="fas fa-home"></i>
+            <i class="fas fa-search-location"></i>
+            <i class="fas fa-chart-line"></i>
+            <i class="fas fa-cog"></i>
+        </nav>
+    </div>
+</template>
+
+<script>
+    import MapView from '@/components/MapView.vue'
+    export default {
+        components: {
+            MapView
+        }
+
+    }
+</script>
+
+<style scoped>
+    .rightContainer {
+        width: 324px;
+        height: 700px;
+        border-radius: 50px;
+        background: linear-gradient(#16455f, #0e1239);
+        box-shadow: 5px, 5px 10px gray;
+    }
+
+    #cityNameBox {
+        width: 100%;
+        height: 10%;
+    }
+
+    .cityName {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+    }
+
+    .cityName p {
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+        line-height: 2.5;
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    .cityName p:first-child {
+        width: 241px;
+        height: 33px;
+        font-size: 1.35rem;
+    }
+
+    .cityName p:last-child {
+        width: 160px;
+        height: 19px;
+        font-size: 0.9rem;
+        font-weight: 100;
+        margin: 0;
+    }
+
+
+
+    #contentsBox {
+        width: 100%;
+        height: calc(45% - 16px);
+        margin-top: 16px;
+    }
+
+    .buttonBox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 20%;
+    }
+
+    .buttonBackground {
+        width: 224px;
+        height: 35px;
+        background-color: #052137;
+        border-radius: 10px;
+        display: flex;
+    }
+
+    .buttonBackground button {
+        width: 112px;
+        height: 35px;
+        border: 0;
+        border-radius: 7.5px;
+        outline: 0;
+        cursor: pointer;
+    }
+
+    .forecast {
+        background-color: #0889ff;
+        color: #fff;
+    }
+
+    .airquality {
+        background-color: transparent;
+        color: #467599;
+    }
+
+
+    .weatherBox {
+        width: 100%;
+        height: 80%;
+    }
+
+    .airCondition {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 35%;
+    }
+
+    .airCondition p {
+        text-align: center;
+        font-size: 2.25rem;
+        font-weight: 500;
+        /* font-family: 'GmarketSansBold'; */
+        color: #fff;
+    }
+
+    .detail {
+        width: 100%;
+        height: 65%;
+    }
+
+    .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 25%;
+        color: white;
+    }
+
+    .title p {
+        /* font-family: 'LeferiPoint-WhiteObliqueA'; */
+    }
+
+    .data {
+        display: flex;
+        width: 100%;
+        height: 27.5%;
+    }
+
+    .dataName {
+        display: flex;
+        align-items: center;
+        width: 50%;
+        height: 100%;
+    }
+
+    .dataName p:first-child {
+        display: block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #ffde23;
+        margin-left: 50px;
+    }
+
+    .dataName p:last-child {
+        margin-left: 10px;
+        color: white;
+        font-weight: 300;
+        font-size: 0.9rem;
+    }
+
+    .dataValue {
+        display: flex;
+        align-items: center;
+        justify-content: right;
+        width: 50%;
+        height: 100%;
+    }
+
+    .dataValue p {
+        color: white;
+        font-weight: 300;
+        margin-right: 50px;
+    }
+
+    .dataValue p span {
+        font-weight: 600;
+
+    }
+
+    nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: calc(100% - 100px);
+        height: 10%;
+        padding: 0 50px;
+    }
+
+    nav i {
+        color: rgb(255, 255, 255);
+        font-size: 1.15rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    nav i:hover {
+        color: #799ed0;
+    }
+</style>
