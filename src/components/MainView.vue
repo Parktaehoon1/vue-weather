@@ -2,8 +2,8 @@
   <div class="leftContainer">
     <div id="cityNameBox">
       <div class="cityName">
-        <p>San Fransisco</p>
-        <p>Jan 28</p>
+        <p>{{ cityName }}</p>
+        <p>{{ currentTime }}</p>
       </div>
     </div>
     <div id="contentsBox">
@@ -64,12 +64,20 @@
 
 <script>
 import axios from "axios";
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
+dayjs.locale("ko");
 
 export default {
   setup() {
     return {
+      currentTime: dayjs().format("YYYY. MM .DD. ddd"),
+      // 상세 날씨 데이터를 받아주는 데이터 할당
+      temp: [],
+      icons: [],
+      cityName: "",
       //임시데이터
-      TemporaryData: [
+      temporaryData: [
         {
           title: "습도",
           value: "88%",
@@ -85,21 +93,25 @@ export default {
       ],
     };
   },
-  created(){
+  created() {
     //https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
-    const API_KEY = '11d451fb1dc708c9efd7b05b16f080d4';
+    //https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
+    const API_KEY = "11d451fb1dc708c9efd7b05b16f080d4";
     let initialLat = 37.562632898194835;
     let initialLon = 126.9454282268269;
     // axios 활용
     axios
-    .get(`https://api.openweathermap.org/data/2.5/weather?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}`)
-    .then(res => {
-        console.log(res)
-    })
-    .catch(err => {
-        console.log(err)
-    })
-  }
+      .get(`https://api.openweathermap.org/data/2.5/weather?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}`)
+      .then((response) => {
+        this.cityName = response.data.name;
+        console.log("response.data", response.data);
+        console.log("res.data.name", response.data.name);
+        console.log(this.cityName);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
 };
 </script>
 
