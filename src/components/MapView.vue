@@ -23,31 +23,21 @@ export default {
   },
   methods: {
     initMap() {
-      var mapContainer = document.getElementById("map"), // 지도를 표시할 div
-        mapOption = {
-          center: new kakao.maps.LatLng(37.564343, 126.947613), // 지도의 중심좌표
-          level: 3, // 지도의 확대 레벨
+      const mapContainer = document.getElementById("map"); // 지도를 표시할 div
+      const mapOption = {
+          center: new kakao.maps.LatLng(36.73035, 127.967487), 
+          level: 13, // 지도의 확대 레벨
         };
 
-      var map = new kakao.maps.Map(mapContainer, mapOption);
-      var positions = [
-        {
-          id: 1,
-          store: "학생문화관점",
-          location: "학생문화관 지하1층 로비",
-          time: "학기 중: 월~금 08:30~19:00 | 토 09:00~14:00",
-          vacation: "방학 중: 월~금 08:30~18:00 | 토 09:00~14:00",
-          tel: "02-3277-3707",
-          latlng: new kakao.maps.LatLng(37.562632898194835, 126.9454282268269),
-        },
-        {
-          latlng: new kakao.maps.LatLng(37.56195884514403, 126.94922601468826),
-        },
+      const map = new kakao.maps.Map(mapContainer, mapOption);
+      const positions = [
+        { latlng: new kakao.maps.LatLng(37.562632898194835, 126.9454282268269)},
+        { latlng: new kakao.maps.LatLng(37.56195884514403, 126.94922601468826)},
       ];
 
         positions.forEach(function(pos){
-            const marker = new kakao.map.Marker({
-                positioin: pos.latlng,
+            const marker = new kakao.maps.Marker({
+                position: pos.latlng
             });
             marker.setMap(map);
         })
