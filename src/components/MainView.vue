@@ -2,7 +2,7 @@
   <div class="leftContainer">
     <div id="cityNameBox">
       <div class="cityName">
-        <p>{{ cityName }}</p>
+        <p>{{ weatherData.name }}</p>
         <p>{{ currentTime }}</p>
       </div>
     </div>
@@ -15,7 +15,8 @@
       </div>
       <div class="weatherBox">
         <div class="weatherDegree">
-          <p>10&deg;</p>
+          <p>{{weatherData.main.temp}}&deg;</p>
+          <!-- <p>30&deg;</p> -->
         </div>
         <div class="weatherIcon">
           <img src="@/assets/43.png" alt="mainlogo" />
@@ -44,7 +45,8 @@
           </div>
           <div class="data">
             <p class="time">2pm</p>
-            <p class="currentDegree">32deg</p>
+            <!-- <p class="currentDegree">{{weatherData.wind.deg}}deg</p> -->
+            <p class="currentDegree">40deg</p>
             <div>
               <img src="@/assets/drop.png" alt="" />
               <p class="fall">15%</p>
@@ -62,20 +64,25 @@
   </div>
 </template>
 
-<script>
-import axios from "axios";
+<script >
+// import axios from "axios";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
+import {useStore} from 'vuex';
+import {computed} from 'vue';
 dayjs.locale("ko");
-
+// console.log(cityName)
 export default {
   setup() {
+    const store = useStore()
+    store.dispatch('fetchWeather');
+    const weatherData = computed(()=> store.getters.getWeather );
+    console.log("weatherData",weatherData);
     return {
+      weatherData,
       currentTime: dayjs().format("YYYY. MM .DD. ddd"),
+      // //현재 온도 데이터
       // 상세 날씨 데이터를 받아주는 데이터 할당
-      temp: [],
-      icons: [],
-      cityName: "",
       //임시데이터
       temporaryData: [
         {
@@ -93,25 +100,27 @@ export default {
       ],
     };
   },
-  created() {
-    //https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
-    //https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
-    const API_KEY = "11d451fb1dc708c9efd7b05b16f080d4";
-    let initialLat = 37.562632898194835;
-    let initialLon = 126.9454282268269;
-    // axios 활용
-    axios
-      .get(`https://api.openweathermap.org/data/2.5/weather?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}`)
-      .then((response) => {
-        this.cityName = response.data.name;
-        console.log("response.data", response.data);
-        console.log("res.data.name", response.data.name);
-        console.log(this.cityName);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
+  //   created() {
+  //   //https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
+  //   //https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
+  //   //https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid={API key}
+  //   const API_KEY = "11d451fb1dc708c9efd7b05b16f080d4";
+  //   let initialLat = 37.562632898194835;
+  //   let initialLon = 126.9454282268269;
+  //   // axios 활용
+  //   axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}`)
+  //     .then((response) => {
+  //       this.cityName = response.data.name;
+  //       this.currentTemp = response.data.main.temp;
+  //       console.log(this.currentTemp)
+  //       console.log("response.data", response);
+  //       console.log("res.data.name", response.data.name);
+  //       console.log(this.cityName);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // },
 };
 </script>
 
