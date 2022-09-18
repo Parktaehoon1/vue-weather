@@ -15,20 +15,16 @@
       </div>
       <div class="weatherBox">
         <div class="weatherDegree">
-          <p>{{weatherData.main.temp}}&deg;</p>
-          <!-- <p>30&deg;</p> -->
+          <!-- <p>{{weatherData.main.temp}}&deg;</p> -->
+          <p>30&deg;</p>
         </div>
         <div class="weatherIcon">
           <img src="@/assets/43.png" alt="mainlogo" />
         </div>
         <div class="weatherData">
-          <div
-            class="detailData"
-            v-for="Temporary in TemporaryData"
-            :key="Temporary.title"
-          >
-            <p>{{ Temporary.title }}</p>
-            <p>{{ Temporary.value }}</p>
+          <div class="detailData" v-for="(item, index) in temporaryData" :key="index">
+            <p>{{ item.title }}</p>
+            <p>{{ item.value }}</p>
           </div>
         </div>
       </div>
@@ -45,8 +41,7 @@
           </div>
           <div class="data">
             <p class="time">2pm</p>
-            <!-- <p class="currentDegree">{{weatherData.wind.deg}}deg</p> -->
-            <p class="currentDegree">40deg</p>
+            <p class="currentDegree">30deg</p>
             <div>
               <img src="@/assets/drop.png" alt="" />
               <p class="fall">15%</p>
@@ -78,6 +73,7 @@ export default {
     store.dispatch('fetchWeather');
     const weatherData = computed(()=> store.getters.getWeather );
     console.log("weatherData",weatherData);
+
     return {
       weatherData,
       currentTime: dayjs().format("YYYY. MM .DD. ddd"),

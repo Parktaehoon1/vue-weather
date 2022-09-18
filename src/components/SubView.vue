@@ -134,13 +134,13 @@
     }
 
     .forecast {
-        background-color: #0889ff;
-        color: #fff;
+        background-color: transparent;
+        color: #467599;
     }
 
     .airquality {
-        background-color: transparent;
-        color: #467599;
+        background-color: #0889ff;
+        color: #fff;
     }
 
 
