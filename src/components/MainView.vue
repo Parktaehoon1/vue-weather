@@ -36,7 +36,7 @@
       </div>
       <div class="timelyWeatherBox">
         <div class="timelyWeather">
-        
+
         </div>
       </div>
     </div>
@@ -62,10 +62,6 @@
   // console.log(cityName)
   export default {
     setup() {
-      // const store = useStore()
-      // store.dispatch('fetchWeather');
-      // const weatherData = computed(()=> store.getters.getWeather );
-      // console.log("weatherData",weatherData);
       let currentTime = dayjs().format("YYYY. MM .DD. ddd");
       let cityName = ref(""); // 도시 이름
       let currentTemp = ref(""); // 현재온도 
@@ -94,8 +90,8 @@
         // API 호출을 위한 필수 데이터
         //https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid={API key}
         const API_KEY = "11d451fb1dc708c9efd7b05b16f080d4";
-        let initialLat = 37.562632898194835;
-        let initialLon = 126.9454282268269;
+        let initialLat = 35.8683476;
+        let initialLon = 128.5940482;
         try {
           const res = await axios.get(
             `https://api.openweathermap.org/data/2.5/weather?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}&units=metric`
@@ -110,7 +106,6 @@
           let isInitialHumidity = isInitialData.main.humidity // 현재습도
           let isInitialIcon = isInitialData.weather[0].icon // 온도아이콘
           console.log("", isInitialIcon)
-          // console.log("습도",isInitialHumidity)
           cityName.value = isInitialCityName;
           currentTemp.value = isInitialTemp;
           currentWind.value = isInitialWindSpeed;
@@ -119,8 +114,7 @@
           temporaryData[0].value = isInitialHumidity
           temporaryData[1].value = isInitialWindSpeed
           temporaryData[2].value = Math.round(isInitialFeel) + '도'
-          // console.log(temporaryData)
-          // console.log(cityName.value)
+
         } catch (error) {}
       }
 
@@ -132,47 +126,9 @@
         currentTemp,
         temporaryData,
         currentWind,
-        currentIcon
-        // //현재 온도 데이터
-        // 상세 날씨 데이터를 받아주는 데이터 할당
-        //임시데이터
-        // temporaryData: [
-        //   {
-        //     title: "습도",
-        //     value: "",
-        //   },
-        //   {
-        //     title: "풍속",
-        //     value: "",
-        //   },
-        //   {
-        //     title: "풍향",
-        //     value: "",
-        //   },
-        // ],
+        currentIcon,
       };
     },
-    //   created() {
-    //   //https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
-    //   //https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
-    //   //https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid={API key}
-    //   const API_KEY = "11d451fb1dc708c9efd7b05b16f080d4";
-    //   let initialLat = 37.562632898194835;
-    //   let initialLon = 126.9454282268269;
-    //   // axios 활용
-    //   axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}`)
-    //     .then((response) => {
-    //       this.cityName = response.data.name;
-    //       this.currentTemp = response.data.main.temp;
-    //       console.log(this.currentTemp)
-    //       console.log("response.data", response);
-    //       console.log("res.data.name", response.data.name);
-    //       console.log(this.cityName);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // },
   };
 </script>
 
