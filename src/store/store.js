@@ -14,7 +14,7 @@ export default createStore({
                 // let initialLon = 126.9454282268269;
                 axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=37.562632898194835&lon=126.9454282268269&appid=11d451fb1dc708c9efd7b05b16f080d4`)
                 .then(res => {
-                    console.log("data들어오나요",res.data)
+                    console.log("data들어오나요",res.data.main.temp)
                     commit('WEATHER_DATA', res.data)
                 })
                 .catch(err => { console.log(err) })
@@ -28,6 +28,7 @@ export default createStore({
     },
     getters: {
         getWeather(state){
+            console.log("state", state)
             return state.weatherData
         }
     }

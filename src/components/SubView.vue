@@ -2,8 +2,8 @@
     <div class="rightContainer">
         <div id="cityNameBox">
             <div class="cityName">
-                <p>San Fransisco</p>
-                <p>Jan 28</p>
+                <p>{{ cityName }}</p>
+                <p>{{ currentTime }}</p>
             </div>
         </div>
         <div id="contentsBox">
@@ -47,10 +47,53 @@
 </template>
 
 <script>
+    import axios from "axios";
     import MapView from '@/components/MapView.vue'
+    import dayjs from "dayjs";
+    import "dayjs/locale/ko";
+    import {
+        ref
+    } from 'vue';
+    dayjs.locale("ko");
     export default {
         components: {
             MapView
+        },
+        setup() {
+            let currentTime = dayjs().format("YYYY. MM .DD. ddd");
+            let cityName = ref(""); // 도시 이름
+
+            const fetchOpenWeatherApi = async () => {
+                // API 호출을 위한 필수 데이터
+                //https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid={API key}
+                const API_KEY = "11d451fb1dc708c9efd7b05b16f080d4";
+                let initialLat = 37.562632898194835;
+                let initialLon = 126.9454282268269;
+                try {
+                    const res = await axios.get(
+                        `https://api.openweathermap.org/data/2.5/weather?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}&units=metric`
+                    )
+                    console.log(res)
+                    let isInitialData = res.data; // 초기데이터
+                    let isInitialCityName = isInitialData.name; // 초기 도시이름 데이터
+                    // let isInitialTemp = isInitialData.main.temp // 현재온도
+                    // let isFeelLikeTemp = isInitialData.main.feels_like; // 초기 체감온도 데이터
+                    // let isTimeOfSunrise = isInitialData.sys.sunrise // 일출시간 데이터
+                    // let isTimeOfSunset = isInitialData.sys.sunset // 일몰시간 데이터
+                    // let isLineOfSight = isInitialData.visibility // 가시거리 데이터 
+                    console.log(isInitialData)
+
+                    cityName.value = isInitialCityName;
+                    console.log(cityName.value)
+                } catch (error) {}
+            }
+
+            fetchOpenWeatherApi();
+
+            return {
+                currentTime,
+                cityName
+            }
         }
 
     }
