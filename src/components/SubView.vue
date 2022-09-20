@@ -67,7 +67,7 @@
 
             const Unix_timestamp = (dt) => {
                 let date = new Date(dt * 1000);
-                let hour = "0" + date.getHours();
+                let hour = date.getHours().toString().padStart(2, "0");
                 return hour.substring(-2) + "시"
             }
 
@@ -90,14 +90,26 @@
                     let isInitialVisible = isInitialData.visibility; // 가시거리
 
 
-                    if(isInitialFeel > 30) feeling.value = "매우 더움";
-                    if(isInitialFeel <= 30) feeling.value = "더움";
-                    if(isInitialFeel <= 25) feeling.value = "보통";
-                    if(isInitialFeel <= 20) feeling.value = "신선함";
-                    if(isInitialFeel <= 15) feeling.value = "쌀쌀함";
-                    if(isInitialFeel <= 10) feeling.value = "추움";
-                    if(isInitialFeel <= 0) feeling.value = "매우 추움";  // return이 없는거는 {} 를 생략해서 그런 것
+                    // if (isInitialFeel > 30) feeling.value = "매우 더움";
+                    // if (isInitialFeel <= 30) feeling.value = "더움";
+                    // if (isInitialFeel <= 25) feeling.value = "보통";
+                    // if (isInitialFeel <= 20) feeling.value = "신선함";
+                    // if (isInitialFeel <= 15) feeling.value = "쌀쌀함";
+                    // if (isInitialFeel <= 10) feeling.value = "추움";
+                    // if (isInitialFeel <= 0) feeling.value = "매우 추움"; // return이 없는거는 {} 를 생략해서 그런 것
 
+                    // 코드 리팩토링
+
+                    const tempPoints = [0, 10, 15, 20, 25, 30];
+                    const lavels = ["매우 추움", "추움", "쌀쌀함", "신선함", "보통", "더움", "매우 더움"]
+
+                    let index = 0;
+                    for (const point of tempPoints){
+                        if (isInitialFeel <= point) break;
+                        index++;
+                    }
+
+                    feeling.value = lavels[index];
 
                     let isPrecessedData = [{
                             name: "일출시간",
