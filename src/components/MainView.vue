@@ -19,7 +19,7 @@
           <p>{{Math.round(currentTemp)}}&deg;</p>
         </div>
         <div class="weatherIcon">
-          <img src="@/assets/43.png" alt="mainlogo" />
+          <img src="@/assets/images/01d.png" alt="mainlogo" />
         </div>
         <div class="weatherData">
           <div class="detailData" v-for="(item, index) in temporaryData" :key="index">
@@ -31,24 +31,12 @@
     </div>
     <div id="todayWeather">
       <div class="textBox">
-        <p>시간대별 날씨 정보</p>
-        <p>이번주 날씨보기</p>
+        <p>오늘의 추천 옷차림</p>
+        <!-- <p>이번주 날씨보기</p> -->
       </div>
       <div class="timelyWeatherBox">
         <div class="timelyWeather">
-          <div class="icon">
-            <img src="@/assets/29.png" alt="" />
-          </div>
-          <div class="data">
-            <p class="time">2pm</p>
-            <!-- <p class="currentDegree">{{weatherData.wind.deg}}deg</p> -->
-            <p class="currentDegree">10deg</p>
-            <div>
-              <img src="@/assets/drop.png" alt="" />
-              <!-- <p class="fall">{{weatherData.wind.speed}}</p> -->
-              <p class="fall">{{currentWind}}</p>
-            </div>
-          </div>
+        
         </div>
       </div>
     </div>
@@ -80,26 +68,27 @@
       // console.log("weatherData",weatherData);
       let currentTime = dayjs().format("YYYY. MM .DD. ddd");
       let cityName = ref(""); // 도시 이름
-      let currentTemp = ref("");// 현재온도 
-      let currentWind = ref("")
-      let temporaryData =  [
-          {
-            title: "습도",
-            value: "",
-          },
-          {
-            title: "풍속",
-            value: "",
-          },
-          {
-            title: "체감온도",
-            value: "",
-          },
-        ];   // 습도 풍속 풍향 체크 
+      let currentTemp = ref(""); // 현재온도 
+      let currentWind = ref(""); // 현재바람
+      let currentIcon = ref(""); // 현재 온도 아이콘
+      console.log("currentIcon 값", currentIcon)
+      console.log("바람값", currentWind)
+      let temporaryData = [{
+          title: "습도",
+          value: "",
+        },
+        {
+          title: "풍속",
+          value: "",
+        },
+        {
+          title: "체감온도", //체감온도를 나타내는 데이터
+          value: "",
+        },
+      ]; // 습도 풍속 풍향 체크 
 
 
       // console.log(cityName)
-      let feeling = ref(""); // 현재 온도에 대한 체감을 나타내는 데이터 
 
       const fetchOpenWeatherApi = async () => {
         // API 호출을 위한 필수 데이터
@@ -110,7 +99,7 @@
         try {
           const res = await axios.get(
             `https://api.openweathermap.org/data/2.5/weather?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}&units=metric`
-            )
+          )
           // console.log(res)
           let isInitialData = res.data; // 초기데이터
           let isInitialCityName = isInitialData.name; // 초기 도시이름 데이터
@@ -119,16 +108,18 @@
           let isInitialWinddeg = isInitialData.wind.deg; // 바람각도?
           let isInitialWindSpeed = isInitialData.wind.speed + "m/s"; // 바람속도
           let isInitialHumidity = isInitialData.main.humidity // 현재습도
-          console.log("습도",isInitialHumidity)
+          let isInitialIcon = isInitialData.weather[0].icon // 온도아이콘
+          console.log("", isInitialIcon)
+          // console.log("습도",isInitialHumidity)
           cityName.value = isInitialCityName;
           currentTemp.value = isInitialTemp;
           currentWind.value = isInitialWindSpeed;
-
+          currentIcon.value = isInitialIcon;
 
           temporaryData[0].value = isInitialHumidity
-          temporaryData[1].value = isInitialWindSpeed 
-          temporaryData[2].value = Math.round(isInitialFeel)+'도'
-          console.log(temporaryData)
+          temporaryData[1].value = isInitialWindSpeed
+          temporaryData[2].value = Math.round(isInitialFeel) + '도'
+          // console.log(temporaryData)
           // console.log(cityName.value)
         } catch (error) {}
       }
@@ -140,7 +131,8 @@
         cityName,
         currentTemp,
         temporaryData,
-        currentWind
+        currentWind,
+        currentIcon
         // //현재 온도 데이터
         // 상세 날씨 데이터를 받아주는 데이터 할당
         //임시데이터
@@ -284,7 +276,7 @@
   .weatherDegree p {
     font-size: 3.5rem;
     font-weight: 500;
-    font-family: "Be Vietnam Pro", sans-serif;
+    font-family: "GmarketSansBold";
     color: #fff;
   }
 
@@ -305,6 +297,7 @@
     display: flex;
     width: 100%;
     height: 25%;
+    font-family: "LeferiPoint-WhiteObliqueA";
   }
 
   .detailData {
@@ -353,29 +346,19 @@
   }
 
   .textBox {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: calc(100% - 70px);
+    display: block;
+    width: 100%;
     height: 35%;
-    padding: 0 35px;
     font-family: "Noto Sans KR", sans-serif;
   }
 
   .textBox p {
     font-weight: 400;
     font-size: 0.8rem;
-    color: #fff;
+    color: #0085ff;
     text-align: center;
   }
 
-  .textBox p:last-child {
-    font-weight: 400;
-    font-size: 0.8rem;
-    color: #0085ff;
-    cursor: pointer;
-    margin-bottom: 2px;
-  }
 
   .timelyWeatherBox {
     display: flex;
@@ -386,66 +369,12 @@
   }
 
   .timelyWeather {
-    display: flex;
-    width: 126px;
+    display: block;
+    width: 100%;
     height: 70px;
+    margin: 0 auto;
     background-color: #0989ff;
     border-radius: 20px;
-  }
-
-  .icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 45%;
-    height: 100%;
-  }
-
-  .icon img {
-    width: 100%;
-  }
-
-  .timelyWeather .data {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    flex-direction: column;
-    width: 55%;
-    height: 100%;
-  }
-
-  .data p {
-    color: whitesmoke;
-    font-family: "Poppins", sans-serif;
-    text-align: center;
-  }
-
-  .data .time {
-    font-size: 0.8rem;
-    font-weight: 200;
-    margin: 0;
-  }
-
-  .data .currentDegree {
-    font-size: 1.2rem;
-    margin: 0;
-  }
-
-  .data div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 33.33%;
-  }
-
-  .data div img {
-    height: 55%;
-  }
-
-  .fall {
-    font-size: 0.9rem;
-    margin: 0;
   }
 
   nav {

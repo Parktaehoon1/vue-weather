@@ -16,20 +16,20 @@
 
             <div class="weatherBox">
                 <div class="airCondition">
-                    <p>매우 추움</p>
+                    <p>{{feeling}}</p>
                 </div>
                 <div class="detail">
                     <div class="title">
-                        <p>Detail Temperatures</p>
+                        <p>🌎상세 날씨 데이터🌎</p>
                     </div>
-                    <div class="data">
+                    <div class="data" v-for="(item, index) in subWeatherData" :key="index">
                         <div class="dataName">
                             <p></p>
-                            <p></p>
+                            <p>{{item.name}}</p>
                         </div>
                         <div class="dataValue">
-                            <p>
-                                <span></span> &deg;
+                            <p>{{item.value}}
+                                <span></span>
                             </p>
                         </div>
                     </div>
@@ -62,6 +62,14 @@
         setup() {
             let currentTime = dayjs().format("YYYY. MM .DD. ddd");
             let cityName = ref(""); // 도시 이름
+            let subWeatherData = ref([]);
+            let feeling = ref("");
+
+            const Unix_timestamp = (dt) => {
+                let date = new Date(dt * 1000);
+                let hour = "0" + date.getHours();
+                return hour.substring(-2) + "시"
+            }
 
             const fetchOpenWeatherApi = async () => {
                 // API 호출을 위한 필수 데이터
@@ -73,18 +81,42 @@
                     const res = await axios.get(
                         `https://api.openweathermap.org/data/2.5/weather?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}&units=metric`
                     )
-                    console.log(res)
+                    console.log("resdata", res.data)
                     let isInitialData = res.data; // 초기데이터
+                    let isInitialFeel = isInitialData.main.feels_like // 초기 체감온도
                     let isInitialCityName = isInitialData.name; // 초기 도시이름 데이터
-                    // let isInitialTemp = isInitialData.main.temp // 현재온도
-                    // let isFeelLikeTemp = isInitialData.main.feels_like; // 초기 체감온도 데이터
-                    // let isTimeOfSunrise = isInitialData.sys.sunrise // 일출시간 데이터
-                    // let isTimeOfSunset = isInitialData.sys.sunset // 일몰시간 데이터
-                    // let isLineOfSight = isInitialData.visibility // 가시거리 데이터 
-                    console.log(isInitialData)
+                    let isTimeSunrise = isInitialData.sys.sunrise; // 일출
+                    let isTimeSunset = isInitialData.sys.sunset; // 일몰
+                    let isInitialVisible = isInitialData.visibility; // 가시거리
+
+
+                    if(isInitialFeel > 30) feeling.value = "매우 더움";
+                    if(isInitialFeel <= 30) feeling.value = "더움";
+                    if(isInitialFeel <= 25) feeling.value = "보통";
+                    if(isInitialFeel <= 20) feeling.value = "신선함";
+                    if(isInitialFeel <= 15) feeling.value = "쌀쌀함";
+                    if(isInitialFeel <= 10) feeling.value = "추움";
+                    if(isInitialFeel <= 0) feeling.value = "매우 추움";  // return이 없는거는 {} 를 생략해서 그런 것
+
+
+                    let isPrecessedData = [{
+                            name: "일출시간",
+                            value: Unix_timestamp(isTimeSunrise)
+                        },
+                        {
+                            name: "일몰시간",
+                            value: Unix_timestamp(isTimeSunset)
+                        },
+                        {
+                            name: "가시거리",
+                            value: isInitialVisible.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
+                                ",") + "M"
+                        },
+                    ];
 
                     cityName.value = isInitialCityName;
                     console.log(cityName.value)
+                    subWeatherData.value = isPrecessedData;
                 } catch (error) {}
             }
 
@@ -92,7 +124,9 @@
 
             return {
                 currentTime,
-                cityName
+                cityName,
+                subWeatherData,
+                feeling
             }
         }
 
@@ -198,6 +232,7 @@
         justify-content: center;
         width: 100%;
         height: 35%;
+        font-family: "GmarketSansBold";
     }
 
     .airCondition p {
@@ -220,6 +255,7 @@
         width: 100%;
         height: 25%;
         color: white;
+        font-family: 'Be Vietnam Pro', sans-serif;
     }
 
     .title p {
