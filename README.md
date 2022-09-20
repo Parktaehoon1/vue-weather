@@ -1,24 +1,22 @@
-# vuepersonal
+기존 생각했던 구성
 
-## Project setup
-```
-npm install
-```
+날씨에 따른 옷차림을 알려주는 앱이 필요하여 만듦 
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Openweather API 를 활용해서 시간대별 날씨 및 기상으로 프로젝트 만들려고했으나
+API가 3.0 유료로 바뀌는 바람에 무료 weather API 로 프로젝트진행
 
-### Compiles and minifies for production
-```
-npm run build
-```
+현재 구현 됐는 것
+1. 기온에 따른 체감온도 알려줌
+2. 카카오맵을 통한 주요 장소 마킹
+3. 풍속 등 세세한 기온 정보 구현
 
-### Lints and fixes files
-```
-npm run lint
-```
+구현 예정
+1. 기온에 따른 옷차림 추천
+2. 카카오맵 마커를 누르면 그 지역의 기온 알려줌
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+어려웠던 점. 
+동기,비동기에 대한 전반적인 지식 부족으로 새로고침 시 페이지 리셋되는 부분이 있었고,
+콘솔창에서는 분명 값이 출력되지만 HTML 에서는 나오지 않는 점이 있었다.
+
+이 부분은 async , await 로 해결,
+앞으로 동기 비동기에 관련해서 조금 더 깊이 있게 공부해서 데이터가 흘러가른 흐름에 대해 정확하게 알아야겠다.
