@@ -19,7 +19,8 @@
           <p>{{Math.round(currentTemp)}}&deg;</p>
         </div>
         <div class="weatherIcon">
-          <img src="@/assets/images/01d.png" alt="mainlogo" />
+          <!-- <img :src="require(`@/assets/images/${currentIcon}.png`)" alt="mainlogo" />    -->
+          <img src="@/assets/images/02d.png" alt="mainlogo" />
         </div>
         <div class="weatherData">
           <div class="detailData" v-for="(item, index) in temporaryData" :key="index">
@@ -35,8 +36,7 @@
         <!-- <p>이번주 날씨보기</p> -->
       </div>
       <div class="timelyWeatherBox">
-        <div class="timelyWeather">
-
+        <div class="timelyWeather" v-html="outPutHtml">
         </div>
       </div>
     </div>
@@ -50,33 +50,26 @@
 </template>
 
 <script>
+  // import useStore from 'vuex'
   import axios from "axios";
   import dayjs from "dayjs";
   import "dayjs/locale/ko";
-  import {useStore} from 'vuex';
-  // import {ref,computed} from 'vue';
-  import {
-    computed,
-    ref
-  } from 'vue';
+  import {ref} from 'vue';
   dayjs.locale("ko");
   // console.log(cityName)
   export default {
     setup() {
-      const store = useStore()
-      store.dispatch('fetchOpenWeatherApi')
-      const getData = computed(() => store.getters.giveMeData)
-      console.log("데이터값",getData)
-
+      // const store = useStore()
+      // store.dispatch('fetchOpenWeatherApi')
+      // const getData = computed(() => store.getters.giveMeData)
+      
 
       let currentTime = dayjs().format("YYYY. MM .DD. ddd");
       let cityName = ref(""); // 도시 이름
       let currentTemp = ref(""); // 현재온도
-      console.log(currentTemp) 
       let currentWind = ref(""); // 현재바람
-      let currentIcon = ref(""); // 현재 온도 아이콘
-      console.log("currentIcon 값", currentIcon)
-      console.log("바람값", currentWind)
+      let currentIcon = ref(''); // 현재 온도 아이콘
+      // console.log("아이콘값 받나요?", currentIcon)
       let temporaryData = [{
           title: "습도",
           value: "",
@@ -90,7 +83,7 @@
           value: "",
         },
       ]; // 습도 풍속 풍향 체크 
-
+    
       const fetchOpenWeatherApi = async () => {
         // API 호출을 위한 필수 데이터
         //https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid={API key}
@@ -108,48 +101,112 @@
           let isInitialWindSpeed = isInitialData.wind.speed + "m/s"; // 바람속도
           let isInitialHumidity = isInitialData.main.humidity // 현재습도
           let isInitialIcon = isInitialData.weather[0].icon // 온도아이콘
-          console.log("", isInitialIcon)
           cityName.value = isInitialCityName;
           currentTemp.value = isInitialTemp;
           currentWind.value = isInitialWindSpeed;
           currentIcon.value = isInitialIcon;
+          console.log("icon값",currentIcon.value); // 값 정확하게 받음.
 
-          temporaryData[0].value = isInitialHumidity
-          temporaryData[1].value = isInitialWindSpeed
-          temporaryData[2].value = Math.round(isInitialFeel) + '도'
 
+          temporaryData[0].value = isInitialHumidity;
+          temporaryData[1].value = isInitialWindSpeed;
+          temporaryData[2].value = Math.round(isInitialFeel) + '도';
+
+          // 화면 출력 데이터 비교
+          showData();
+
+          console.log(res)
         } catch (error) {
           console.log(error)
         }
       }
       fetchOpenWeatherApi();
 
+      const outPutHtml = ref('');
+      const showData = () => {
 
+        // console.log("currentTemp", currentTemp.value)
 
-        let clothes = document.getElementsByClassName('timelyWeather')
-        console.log("currentTemp",currentTemp.value)
+        let winter = currentTemp.value <= 4;
+        let earlyWinter = currentTemp.value >= 5 && currentTemp.value < 9;
+        let beginWinter = currentTemp.value >= 9 && currentTemp.value < 12;
+        let fall = currentTemp.value >= 12 && currentTemp.value < 17;
+        let earlyFall = currentTemp.value >= 17 && currentTemp.value < 20;
+        let earlySummer = currentTemp.value >= 20 && currentTemp.value < 23;
+        let beginSummer = currentTemp.value >= 23 && currentTemp.value < 28;
+        let summer = currentTemp >= 28;  // 마지막 else 구문에 넣어둠
 
-        let winter = currentTemp <= 4;
-        let earlyWinter = currentTemp >= 5 && currentTemp < 9;
-        let beginWinter = currentTemp >= 9 && currentTemp < 12;
-        let fail = currentTemp >= 12 && currentTemp < 17;
-        let earlyFall = currentTemp >= 17 && currentTemp < 20;
-        let earlySummer = currentTemp >= 20 && currentTemp < 23;
-        let beginSummer = currentTemp >= 23 && currentTemp < 28;
-        let summer = currentTemp >= 28;
+        if (winter) {
+          outPutHtml.value = ` 
+          <ul class="depth1">
+            <li>패딩점퍼</li>
+            <li>두꺼운 코드</li>
+            <li>목도리</li>
+            <li>기모의류</li>
+          </ul>
+          `
+        } else if (earlyWinter) {
+          outPutHtml.value = ` 
+          <ul class="depth1">
+            <li>얇은패딩</li>
+            <li>코트</li>
+            <li>니트</li>
+          </ul>
+          `
 
-
-        if(beginSummer && earlySummer){
-          clothes.innerHTML=`
-          <li>지금날씨에는</li>
-          <li>패딩점퍼</li>
-          <li>두꺼운 코드</li>
-          <li>목도리</li>
-          <li>기모의류</li>
+        } else if (beginWinter) {
+          outPutHtml.value = ` 
+          <ul class="depth1">
+            <li>두꺼운코트</li>
+            <li>니트</li>
+            <li>슬랙스</li>
+          </ul>
+          `
+        } else if (earlyFall) {
+          outPutHtml.value = ` 
+          <ul class="depth1">
+            <li>얇은코트</li>
+            <li>니트</li>
+            <li>긴바지</li>
+          </ul>
+          `
+        } else if (fall) {
+          outPutHtml.value = ` 
+          <ul class="depth1">
+            <li>맥코트</li>
+            <li>긴팔티</li>
+            <li>긴바지</li>
+          </ul>
+          `
+        } else if (earlySummer) {
+          outPutHtml.value = ` 
+          <ul class="depth1">
+            <li>반팔티</li>
+            <li>면바지</li>
+            <li>스니커즈</li>
+          </ul>
+          `
+        }else if (beginSummer) {
+          outPutHtml.value = ` 
+          <ul class="depth1">
+            <li>반팔티</li>
+            <li>면바지</li>
+            <li>스니커즈</li>
+          </ul>
+          `
+        } else {
+          outPutHtml.value = ` 
+          <ul class="depth1">
+            <li>나시</li>
+            <li>반바지</li>
+            <li>쪼리</li>
+          </ul>
           `
         }
 
 
+
+      }
       return {
         currentTime,
         cityName,
@@ -157,12 +214,13 @@
         temporaryData,
         currentWind,
         currentIcon,
+        outPutHtml,
       };
     },
   };
 </script>
 
-<style scoped>
+<style>
   .leftContainer {
     width: 324px;
     height: 700px;
@@ -349,7 +407,7 @@
   .timelyWeatherBox {
     display: flex;
     align-items: center;
-    width: calc(100% - 70px);
+    width: 100%;
     height: 65%;
     padding: 0 30px;
   }
@@ -363,11 +421,28 @@
     border-radius: 20px;
   }
 
+  .depth1 {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .depth1 li {
+    color: #fff;
+    margin: 2px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Be Vietnam Pro', sans-serif;
+  }
+
+
   nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: calc(100% - 100px);
+    width: 100%;
     height: 10%;
     padding: 0 50px;
   }

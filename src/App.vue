@@ -30,4 +30,28 @@ export default {
     font-weight: normal;
     font-style: normal;
 }
+
+	* {
+		margin: 0px;
+		padding: 0px;
+		box-sizing: border-box;
+		outline-style: none;
+	}
+
+	ul,
+	li {
+		list-style: none;
+	}
+
+	img {
+		vertical-align: middle;
+		border: 0;
+	}
+
+	a {
+		text-decoration: none;
+		color: #000;
+	}
+
+
 </style>

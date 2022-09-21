@@ -144,7 +144,10 @@
     }
 </script>
 
-<style scoped>
+
+
+<style scoped>  
+/* 스코프깨면 css 엉망됨 */
     .rightContainer {
         width: 324px;
         height: 700px;
@@ -325,7 +328,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: calc(100% - 100px);
+        width: 100%;
         height: 10%;
         padding: 0 50px;
     }
