@@ -53,18 +53,26 @@
   import axios from "axios";
   import dayjs from "dayjs";
   import "dayjs/locale/ko";
-  // import {useStore} from 'vuex';
+  import {useStore} from 'vuex';
   // import {ref,computed} from 'vue';
   import {
+    computed,
     ref
   } from 'vue';
   dayjs.locale("ko");
   // console.log(cityName)
   export default {
     setup() {
+      const store = useStore()
+      store.dispatch('fetchOpenWeatherApi')
+      const getData = computed(() => store.getters.giveMeData)
+      console.log("데이터값",getData)
+
+
       let currentTime = dayjs().format("YYYY. MM .DD. ddd");
       let cityName = ref(""); // 도시 이름
-      let currentTemp = ref(""); // 현재온도 
+      let currentTemp = ref(""); // 현재온도
+      console.log(currentTemp) 
       let currentWind = ref(""); // 현재바람
       let currentIcon = ref(""); // 현재 온도 아이콘
       console.log("currentIcon 값", currentIcon)
@@ -83,9 +91,6 @@
         },
       ]; // 습도 풍속 풍향 체크 
 
-
-      // console.log(cityName)
-
       const fetchOpenWeatherApi = async () => {
         // API 호출을 위한 필수 데이터
         //https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid={API key}
@@ -96,12 +101,10 @@
           const res = await axios.get(
             `https://api.openweathermap.org/data/2.5/weather?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}&units=metric`
           )
-          // console.log(res)
           let isInitialData = res.data; // 초기데이터
           let isInitialCityName = isInitialData.name; // 초기 도시이름 데이터
           let isInitialTemp = isInitialData.main.temp // 현재온도
           let isInitialFeel = isInitialData.main.feels_like // 체감온도
-          let isInitialWinddeg = isInitialData.wind.deg; // 바람각도?
           let isInitialWindSpeed = isInitialData.wind.speed + "m/s"; // 바람속도
           let isInitialHumidity = isInitialData.main.humidity // 현재습도
           let isInitialIcon = isInitialData.weather[0].icon // 온도아이콘
@@ -115,10 +118,37 @@
           temporaryData[1].value = isInitialWindSpeed
           temporaryData[2].value = Math.round(isInitialFeel) + '도'
 
-        } catch (error) {}
+        } catch (error) {
+          console.log(error)
+        }
       }
-
       fetchOpenWeatherApi();
+
+
+
+        let clothes = document.getElementsByClassName('timelyWeather')
+        console.log("currentTemp",currentTemp.value)
+
+        let winter = currentTemp <= 4;
+        let earlyWinter = currentTemp >= 5 && currentTemp < 9;
+        let beginWinter = currentTemp >= 9 && currentTemp < 12;
+        let fail = currentTemp >= 12 && currentTemp < 17;
+        let earlyFall = currentTemp >= 17 && currentTemp < 20;
+        let earlySummer = currentTemp >= 20 && currentTemp < 23;
+        let beginSummer = currentTemp >= 23 && currentTemp < 28;
+        let summer = currentTemp >= 28;
+
+
+        if(beginSummer && earlySummer){
+          clothes.innerHTML=`
+          <li>지금날씨에는</li>
+          <li>패딩점퍼</li>
+          <li>두꺼운 코드</li>
+          <li>목도리</li>
+          <li>기모의류</li>
+          `
+        }
+
 
       return {
         currentTime,

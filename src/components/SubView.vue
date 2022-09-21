@@ -81,7 +81,6 @@
                     const res = await axios.get(
                         `https://api.openweathermap.org/data/2.5/weather?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}&units=metric`
                     )
-                    console.log("resdata", res.data)
                     let isInitialData = res.data; // 초기데이터
                     let isInitialFeel = isInitialData.main.feels_like // 초기 체감온도
                     let isInitialCityName = isInitialData.name; // 초기 도시이름 데이터
@@ -127,7 +126,7 @@
                     ];
 
                     cityName.value = isInitialCityName;
-                    console.log(cityName.value)
+  
                     subWeatherData.value = isPrecessedData;
                 } catch (error) {}
             }
