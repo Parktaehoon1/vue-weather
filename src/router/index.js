@@ -1,13 +1,13 @@
-import {createRouter, createWebHashHistory} from 'vue-router';
-import Home from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from "vue-router";
+import Home from "../views/HomeView.vue";
 
 export default createRouter({
-    history: createWebHashHistory(),
-    routes:[
-        {
-            path:'/',
-            name:Home,
-            component:Home
-        }
-    ]
-})
+  history: createWebHistory(),
+  routes: [
+    {
+      path: "/page-weather/",
+      name: Home,
+      component: Home,
+    },
+  ],
+});

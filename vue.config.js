@@ -1,6 +1,6 @@
-const { defineConfig } = require('@vue/cli-service')
+const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
   transpileDependencies: true,
-  lintOnSave: false // eslint 자꾸 걸림;; 
-
-})
+  publicPath: "/page-weather",
+  lintOnSave: false, // eslint 자꾸 걸림;;
+});
