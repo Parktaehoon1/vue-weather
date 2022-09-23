@@ -62,15 +62,15 @@ export default {
   components: {
     MapView,
   },
+  props: ["markDataResult"],
   setup(props, { emit }) {
     const newData = ref({});
 
     const showMessage = (markData) => {
       emit("markData", markData);
+
       // 받아온 데이터를 처리해준다.
-      console.log("마크데이터", markData);
       newData.value = markData;
-      // console.log("newData.value", newData.value);
     };
 
     let currentTime = dayjs().format("YYYY. MM .DD. ddd");
@@ -100,6 +100,16 @@ export default {
         let isTimeSunrise = isInitialData.sys.sunrise; // 일출
         let isTimeSunset = isInitialData.sys.sunset; // 일몰
         let isInitialVisible = isInitialData.visibility; // 가시거리
+
+        // if (isInitialFeel > 30) feeling.value = "매우 더움";
+        // if (isInitialFeel <= 30) feeling.value = "더움";
+        // if (isInitialFeel <= 25) feeling.value = "보통";
+        // if (isInitialFeel <= 20) feeling.value = "신선함";
+        // if (isInitialFeel <= 15) feeling.value = "쌀쌀함";
+        // if (isInitialFeel <= 10) feeling.value = "추움";
+        // if (isInitialFeel <= 0) feeling.value = "매우 추움"; // return이 없는거는 {} 를 생략해서 그런 것
+
+        // 코드 리팩토링
 
         const tempPoints = [0, 10, 15, 20, 25, 30];
         const lavels = [

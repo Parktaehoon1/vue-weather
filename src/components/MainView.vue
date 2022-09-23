@@ -65,7 +65,7 @@ dayjs.locale("ko");
 export default {
   props: ["markDataResult"],
   setup(props) {
-    let newData = ref({});
+    const newData = ref({});
     onUpdated(() => {
       newData.value = props.markDataResult;
     });
