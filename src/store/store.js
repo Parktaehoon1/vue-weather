@@ -11,15 +11,17 @@
 //       let initialLat = 35.8683476;
 //       let initialLon = 128.5940482;
 //       //`https://api.openweathermap.org/data/2.5/weather?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}&units=metric`
-//       await axios
-//         .get(
-//           `https://api.openweathermap.org/data/2.5/weather?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}&units=metric`
-//         )
-//         .then((res) => {
-//           console.log(res);
-//           commit("");
-//         })
-//         .catch((err) => console.log(err));
+//       try {
+//         await axios
+//           .get(`https://api.openweathermap.org/data/2.5/weather?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}&units=metric`)
+//           .then((res) => {
+//             console.log(res);
+//             commit("");
+//           })
+//           .catch((err) => console.log(err));
+//       } catch (err) {
+//         console.log(err);
+//       }
 //     },
 //   },
 //   mutations: {

@@ -12,7 +12,7 @@ export default {
     const initMap = () => {
       const mapContainer = document.getElementById("map"); // 지도를 표시할 div
       const mapOption = {
-        center: new kakao.maps.LatLng(35.8683476, 128.5940482),
+        center: new kakao.maps.LatLng(35.8683476, 128.5940482), // 여기도 값이 변경되어야됨
         level: 13, // 지도의 확대 레벨
       };
       const map = new kakao.maps.Map(mapContainer, mapOption);
@@ -26,34 +26,31 @@ export default {
           position: pos.latlng,
         });
         marker.setMap(map);
-        // 마커를 클릭했을때np
+        // 마커를 클릭했을때
         const goData = kakao.maps.event.addListener(marker, "click", () => {
-          // 현재 마커는 다 찍혀있다.
-
-          //1번쨰--------------
-
+          console.log("kakaomapsevent", kakao.maps.event);
+          // 1. 현재 마커는 다 찍힘 완료
+          //1번째 시도 실패--------------
           // let markDataLa = pos.latlng.La;
           // console.log(
           // "🚀 ~ file: MapView.vue ~ line 33 ~ goData ~ markDataLa",
           // markDataLa
           // ); // 마커값 나옴
-
           // let markDataMa = pos.latlng.Ma;
           // console.log(
           // "🚀 ~ file: MapView.vue ~ line 36 ~ goData ~ markDataMa",
           // markDataMa
           // ); // 마커값 나옴
-
           //----------------------
 
+          // 2. 마커 값 출력 완료.
           let markData = {
             markDataLa: pos.latlng.La,
             markDataMa: pos.latlng.Ma,
           };
-          console.log(
-            "🚀 ~ file: MapView.vue ~ line 53 ~ goData ~ markData",
-            markData
-          ); // 마커값 나옴
+          console.log("🚀 ~ file: MapView.vue ~ line 53 ~ goData ~ markData", markData);
+          // 3. 마커 값을 부모에게로 보낸다 실패, goData 안에서는 값이 나오는데 밖에서는 안나옴
+          // scoped. 어떻게 뺴야되는거지?
         });
       });
     };
@@ -71,9 +68,7 @@ export default {
       }
     });
 
-    return {
-      // goData,
-    };
+    return {};
   },
 };
 </script>
