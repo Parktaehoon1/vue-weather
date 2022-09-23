@@ -5,10 +5,14 @@
 </template>
 
 <script>
+import { ref } from "vue";
 import MapPositions from "@/assets/map-positions.json";
 import { onMounted } from "@vue/runtime-core";
 export default {
   setup(props, { emit }) {
+    const showMessage = (markData) => {
+      emit("markData", markData);
+    };
     const initMap = () => {
       const mapContainer = document.getElementById("map"); // 지도를 표시할 div
       const mapOption = {
@@ -48,13 +52,17 @@ export default {
             markDataLa: pos.latlng.La,
             markDataMa: pos.latlng.Ma,
           };
-          console.log("🚀 ~ file: MapView.vue ~ line 53 ~ goData ~ markData", markData);
+          console.log(
+            "🚀 ~ file: MapView.vue ~ line 53 ~ goData ~ markData",
+            markData
+          );
           // 3. 마커 값을 부모에게로 보낸다 실패, goData 안에서는 값이 나오는데 밖에서는 안나옴
           // scoped. 어떻게 뺴야되는거지?
+          showMessage(markData);
         });
       });
     };
-    emit("markData");
+
     onMounted(() => {
       if (window.kakao && window.kakao.maps) {
         initMap();

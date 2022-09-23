@@ -1,15 +1,18 @@
 <template>
-  <RouterView @markData="getData" />
+  <RouterView @markData="getData" :markDataResult="markDataResult" />
 </template>
 
 <script>
+import { ref } from "vue";
 export default {
   setup() {
-    const getData = () => {
-      console.log("emit했나?", getData);
+    const markDataResult = ref({});
+    const getData = (markData) => {
+      markDataResult.value = markData;
     };
     return {
       getData,
+      markDataResult,
     };
   },
 };

@@ -59,11 +59,17 @@
 import axios from "axios";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
-import { ref } from "vue";
+import { onUpdated, ref } from "vue";
 dayjs.locale("ko");
 // console.log(cityName)
 export default {
-  setup() {
+  props: ["markDataResult"],
+  setup(props) {
+    let newData = ref({});
+    onUpdated(() => {
+      newData.value = props.markDataResult;
+    });
+
     // const store = useStore()
     // store.dispatch('fetchOpenWeatherApi')
     // const getData = computed(() => store.getters.giveMeData)
@@ -214,6 +220,7 @@ export default {
       currentWind,
       currentIcon,
       outPutHtml,
+      newData,
     };
   },
 };
