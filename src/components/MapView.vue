@@ -1,6 +1,6 @@
 <template>
   <div id="mapContainer">
-    <div id="map"></div>
+    <div id="map" @click="goData"></div>
   </div>
 </template>
 
@@ -21,18 +21,43 @@ export default {
         cityName: pos.cityName,
       }));
 
-      positions.forEach((pos) => {
+      const goData = positions.forEach((pos) => {
         const marker = new kakao.maps.Marker({
           position: pos.latlng,
         });
         marker.setMap(map);
-        // 마커를 클릭했을때
-        kakao.maps.event.addListener(marker, "click", () => {
-          console.log(marker);
+        // 마커를 클릭했을때np
+        const goData = kakao.maps.event.addListener(marker, "click", () => {
+          // 현재 마커는 다 찍혀있다.
+
+          //1번쨰--------------
+
+          // let markDataLa = pos.latlng.La;
+          // console.log(
+          // "🚀 ~ file: MapView.vue ~ line 33 ~ goData ~ markDataLa",
+          // markDataLa
+          // ); // 마커값 나옴
+
+          // let markDataMa = pos.latlng.Ma;
+          // console.log(
+          // "🚀 ~ file: MapView.vue ~ line 36 ~ goData ~ markDataMa",
+          // markDataMa
+          // ); // 마커값 나옴
+
+          //----------------------
+
+          let markData = {
+            markDataLa: pos.latlng.La,
+            markDataMa: pos.latlng.Ma,
+          };
+          console.log(
+            "🚀 ~ file: MapView.vue ~ line 53 ~ goData ~ markData",
+            markData
+          ); // 마커값 나옴
         });
       });
     };
-
+    emit("markData");
     onMounted(() => {
       if (window.kakao && window.kakao.maps) {
         initMap();
@@ -46,7 +71,9 @@ export default {
       }
     });
 
-    return {};
+    return {
+      // goData,
+    };
   },
 };
 </script>
