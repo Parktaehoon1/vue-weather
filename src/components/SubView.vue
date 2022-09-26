@@ -49,8 +49,6 @@
       <i class="fas fa-cog"></i>
     </nav>
   </div>
-  subview : {{ markDataResult.markDataLa }} subview :
-  {{ markDataResult.markDataMa }}
 </template>
 
 <script>
@@ -73,8 +71,8 @@ export default {
 
       // 받아온 데이터를 처리해준다.
       newData.value = markData;
-      console.log("subView", newData.value);
-    };
+      fetchOpenWeatherApi(newData.value.markDataMa, newData.value.markDataLa);
+};
 
     let currentTime = dayjs().format("YYYY. MM .DD. ddd");
     let cityName = ref(""); // 도시 이름
@@ -86,12 +84,12 @@ export default {
       return hour.substring(-2) + "시";
     };
 
-    const fetchOpenWeatherApi = async () => {
+    const fetchOpenWeatherApi = async (lat = 35.8683476, lon = 128.5940482) => {
       // API 호출을 위한 필수 데이터
       //https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid={API key}
       const API_KEY = "11d451fb1dc708c9efd7b05b16f080d4";
-      let initialLat = 35.8683476;
-      let initialLon = 128.5940482;
+      let initialLat = lat;
+      let initialLon = lon;
       try {
         const res = await axios.get(
           `https://api.openweathermap.org/data/2.5/weather?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}&units=metric`

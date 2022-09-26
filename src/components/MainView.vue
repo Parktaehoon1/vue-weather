@@ -52,7 +52,6 @@
       <i class="fas fa-cog"></i>
     </nav>
   </div>
-  mainview:{{ newData.markDataLa }} mainview:{{ newData.markDataMa }}
 </template>
 
 <script>
@@ -69,6 +68,7 @@ export default {
     const newData = ref({});
     onUpdated(() => {
       newData.value = props.markDataResult;
+      fetchOpenWeatherApi(newData.value.markDataMa, newData.value.markDataLa);
     });
     // const store = useStore()
     // store.dispatch('fetchOpenWeatherApi')
@@ -94,12 +94,12 @@ export default {
       },
     ]; // 습도 풍속 풍향 체크
 
-    const fetchOpenWeatherApi = async () => {
+    const fetchOpenWeatherApi = async (lat = 35.8683476, lon = 128.5940482) => {
       // API 호출을 위한 필수 데이터
       //https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid={API key}
       const API_KEY = "11d451fb1dc708c9efd7b05b16f080d4";
-      let initialLat = 35.8683476;
-      let initialLon = 128.5940482;
+      let initialLat = lat;
+      let initialLon = lon;
       try {
         const res = await axios.get(
           `https://api.openweathermap.org/data/2.5/weather?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}&units=metric`
