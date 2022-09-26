@@ -52,6 +52,7 @@
       <i class="fas fa-cog"></i>
     </nav>
   </div>
+  mainview:{{ newData.markDataLa }} mainview:{{ newData.markDataMa }}
 </template>
 
 <script>
@@ -59,7 +60,7 @@
 import axios from "axios";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
-import { onUpdated, ref } from "vue";
+import { computed, onUpdated, ref } from "vue";
 dayjs.locale("ko");
 // console.log(cityName)
 export default {
@@ -69,11 +70,9 @@ export default {
     onUpdated(() => {
       newData.value = props.markDataResult;
     });
-
     // const store = useStore()
     // store.dispatch('fetchOpenWeatherApi')
     // const getData = computed(() => store.getters.giveMeData)
-
     let currentTime = dayjs().format("YYYY. MM .DD. ddd");
     let cityName = ref(""); // 도시 이름
     let currentTemp = ref(""); // 현재온도
@@ -212,6 +211,7 @@ export default {
           `;
       }
     };
+
     return {
       currentTime,
       cityName,

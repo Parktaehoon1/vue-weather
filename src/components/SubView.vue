@@ -49,6 +49,8 @@
       <i class="fas fa-cog"></i>
     </nav>
   </div>
+  subview : {{ markDataResult.markDataLa }} subview :
+  {{ markDataResult.markDataMa }}
 </template>
 
 <script>
@@ -71,13 +73,13 @@ export default {
 
       // 받아온 데이터를 처리해준다.
       newData.value = markData;
+      console.log("subView", newData.value);
     };
 
     let currentTime = dayjs().format("YYYY. MM .DD. ddd");
     let cityName = ref(""); // 도시 이름
     let subWeatherData = ref([]);
     let feeling = ref("");
-
     const Unix_timestamp = (dt) => {
       let date = new Date(dt * 1000);
       let hour = date.getHours().toString().padStart(2, "0");

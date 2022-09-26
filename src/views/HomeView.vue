@@ -2,7 +2,9 @@
   <div class="wrap">
     <div class="container">
       <MainView :markDataResult="markDataResult" />
-      <SubView @markData="showMessage" />
+      <!-- MainView로 props -->
+      <SubView @markData="showMessage" :markDataResult="markDataResult" />
+      <!-- SubView로 emit -->
     </div>
   </div>
 </template>

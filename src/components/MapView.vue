@@ -1,11 +1,11 @@
 <template>
   <div id="mapContainer">
-    <div id="map" @click="goData"></div>
+    <div id="map"></div>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+// import { ref } from "vue";
 import MapPositions from "@/assets/map-positions.json";
 import { onMounted } from "@vue/runtime-core";
 export default {
@@ -25,14 +25,14 @@ export default {
         cityName: pos.cityName,
       }));
 
-      const goData = positions.forEach((pos) => {
+      positions.forEach((pos) => {
         const marker = new kakao.maps.Marker({
           position: pos.latlng,
         });
         marker.setMap(map);
         // 마커를 클릭했을때
-        const goData = kakao.maps.event.addListener(marker, "click", () => {
-          console.log("kakaomapsevent", kakao.maps.event);
+        kakao.maps.event.addListener(marker, "click", () => {
+          // console.log("kakaomapsevent", kakao.maps.event);
           // 1. 현재 마커는 다 찍힘 완료
           //1번째 시도 실패--------------
           // let markDataLa = pos.latlng.La;
