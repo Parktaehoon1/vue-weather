@@ -30,24 +30,7 @@ export default {
           position: pos.latlng,
         });
         marker.setMap(map);
-        // 마커를 클릭했을때
         kakao.maps.event.addListener(marker, "click", () => {
-          // console.log("kakaomapsevent", kakao.maps.event);
-          // 1. 현재 마커는 다 찍힘 완료
-          //1번째 시도 실패--------------
-          // let markDataLa = pos.latlng.La;
-          // console.log(
-          // "🚀 ~ file: MapView.vue ~ line 33 ~ goData ~ markDataLa",
-          // markDataLa
-          // ); // 마커값 나옴
-          // let markDataMa = pos.latlng.Ma;
-          // console.log(
-          // "🚀 ~ file: MapView.vue ~ line 36 ~ goData ~ markDataMa",
-          // markDataMa
-          // ); // 마커값 나옴
-          //----------------------
-
-          // 2. 마커 값 출력 완료.
           let markData = {
             markDataLa: pos.latlng.La,
             markDataMa: pos.latlng.Ma,
@@ -56,8 +39,6 @@ export default {
             "🚀 ~ file: MapView.vue ~ line 53 ~ goData ~ markData",
             markData
           );
-          // 3. 마커 값을 부모에게로 보낸다 실패, goData 안에서는 값이 나오는데 밖에서는 안나옴
-          // scoped. 어떻게 뺴야되는거지?
           showMessage(markData);
         });
       });

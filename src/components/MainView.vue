@@ -59,7 +59,7 @@
 import axios from "axios";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
-import { computed, onUpdated, ref } from "vue";
+import { onUpdated, ref } from "vue";
 dayjs.locale("ko");
 // console.log(cityName)
 export default {
