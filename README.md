@@ -25,8 +25,9 @@ API가 3.0 유료로 바뀌는 바람에 무료 weather API 로 프로젝트진�
 동기,비동기에 대한 전반적인 지식 부족으로 새로고침 시 페이지 리셋되는 부분이 있었고,
 이 부분은 try, catch 와 async , await 로 해결하였다.
 
-vue build 시 https -> http 호출 이슈
+vue build 시 https -> http 호출 이슈<br>
 ![image](https://user-images.githubusercontent.com/101313551/192421818-47fb3434-a9be-4de7-9a9a-d6b4355205a9.png)
+<br>
 관련해서 메타태그 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 추가로 해결
 
 
