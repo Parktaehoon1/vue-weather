@@ -180,6 +180,10 @@ export default {
   position: relative;
   display: block;
   width: 75%;
+  height: 150px;
+  background: linear-gradient(360deg, #f5f3f7 10%, #e9e9e9 360%);
+  padding: 5px;
+
   margin: 20px auto;
   text-align: left;
   font-size: 15px;
