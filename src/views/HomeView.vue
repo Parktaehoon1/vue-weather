@@ -1,4 +1,5 @@
 <template>
+  <ModaiView />
   <div class="wrap">
     <div class="container">
       <MainView :markDataResult="markDataResult" />
@@ -13,10 +14,12 @@
 import { ref } from "vue";
 import MainView from "@/components/MainView.vue";
 import SubView from "@/components/SubView.vue";
+import ModaiView from "@/components/ModalView.vue";
 export default {
   components: {
     MainView,
     SubView,
+    ModaiView,
   },
   setup(props) {
     const markDataResult = ref({});
