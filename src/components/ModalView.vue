@@ -12,26 +12,26 @@
         <p class="modal-desc">
           이 사이트는 <span class="checkfont">스터디용</span>으로
           제작되었습니다.
-          <br />
-          해당 사이트 관련 문제 사항이 있으시면 연락 부탁드립니다.
         </p>
-
-        <p class="modal-study">
-          1. openweather api 3.0 이용하였습니다.<br />
-          2. kakaomap api 이용하였습니다.<br />
-          3. kakaomap 마커 활용하여 해당 지역 날씨 체크 구현하였습니다.<br />
-          4. if문 활용하여 온도 별 추천 옷차림 구현하였습니다.<br />
-          5. vue3 문법 적용하였습니다.
-        </p>
-
         <p class="modal-chrome">
           본 사이트는 <span class="checkfont">Chrome</span> 에 최적화되어
           있습니다.😊
         </p>
+
+        <p class="modal-study">
+          1. openweather api 3.0 /kakaomap api 이용하였습니다.<br />
+          2. kakaomap 마커 활용하여 해당 지역 날씨 체크 구현하였습니다.<br />
+          3. if문 활용하여 온도 별 추천 옷차림 구현하였습니다.<br />
+          4. vue3 문법 적용하였습니다.
+        </p>
+
         <button class="modal-close">
           <!-- <i class="fas fa-times"></i> -->
           CLOSE
         </button>
+        <p class="warning">
+          해당 사이트 관련 문제 사항이 있으시면 연락 부탁드립니다.
+        </p>
       </div>
     </div>
   </div>
@@ -146,58 +146,45 @@ export default {
 }
 
 .modal-main h1 {
-  position: absolute;
-  left: 0;
-  top: 0;
+  position: relative;
   display: block;
   width: 100%;
   font-size: 30px;
   font-weight: 600;
   text-align: center;
   color: #333;
-  padding: 20px 0;
+  padding-top: 20px;
 }
 
 .modal-desc {
-  position: absolute;
-  left: 50%;
-  top: 25%;
+  position: relative;
   display: block;
   width: 100%;
-  transform: translate(-50%, -50%);
   text-align: center;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
   color: #333;
   line-height: 1.8;
 }
-
+.modal-chrome {
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  line-height: 1.8;
+}
 .modal-study {
-  position: absolute;
-  left: 50%;
-  top: 52%;
+  position: relative;
   display: block;
   width: 75%;
-  margin: 0 auto;
-  transform: translate(-50%, -50%);
+  margin: 20px auto;
   text-align: left;
   font-size: 15px;
   font-weight: 400;
   font-weight: 700;
-  color: #111;
-  line-height: 1.8;
-}
-
-.modal-chrome {
-  position: absolute;
-  left: 50%;
-  top: 75%;
-  display: block;
-  width: 100%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  font-size: 15px;
-  font-weight: 500;
   color: #111;
   line-height: 1.8;
 }
@@ -222,19 +209,17 @@ export default {
 }
 
 .modal-close {
-  position: absolute;
-  left: 50%;
-  bottom: 30px;
-  transform: translateX(-50%);
+  position: relative;
   display: block;
-  width: 150px;
+  width: 100px;
+  margin: 10px auto;
   padding: 5px 10px;
   border: 1px solid #000;
   cursor: pointer;
-  font-size: 25px;
-  background: transparent;
-  color: #000;
-  border-radius: 5px;
+  font-size: 20px;
+  background: #000;
+  color: #fff;
+  border-radius: 10px;
   transition: all 0.5s;
 }
 
@@ -243,15 +228,8 @@ export default {
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
 }
 
-.modal-warning {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 200px;
-  height: 200px;
-  color: red;
-  opacity: 0.3;
-  z-index: -9;
+.warning {
+  font-size: 12px;
+  text-align: center;
 }
 </style>
