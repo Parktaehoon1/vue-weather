@@ -182,6 +182,7 @@ export default {
   transform: translate(-50%, -50%);
   text-align: left;
   font-size: 15px;
+  font-weight: 400;
   font-weight: 700;
   color: #111;
   line-height: 1.8;
